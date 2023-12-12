@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Projeto de Literatura</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/css.css" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="imagens/livro.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <div class="layout">
+            <div class="col-md-1">
+                <a href="index.html">
+                    <img src="imagens/logoPreta.jpg" class="logo">
+                </a>
+            </div>
+            <div class="col-md-8">
+                <div class="listaLinks">
+                    <a class="links" href="sobreAutor.html">SOBRE O AUTOR</a>
+                    <a class="links" href="audiobooksContos.html">OBRAS DO AUTOR</a>
+                    <a class="links" href="textosProjeto.html">TEXTOS DO PROJETO</a>
+                    <a class="links" href="audiobooksContos.html">AUDIOBOOKS</a>
+                </div>
+            </div>
+            <div class="col-sm" style="padding-left: 95px;">
+                <a href="login.html">
+                    <button class="buttonLogin" type="button" id="logado">Login</button>
+                    <button id="deslogar" class="buttonLogin" style="margin-left: 20px;">Sair</button>
+                </a>
+            </div>
+        </div>
+    </header>
+    <main>
+    <div class="divSobreAutor">
+        <div class="card-1">       
+            <div>
+            <p class="pSobreAutor" id="pAutor">Joaquim Maria Machado de Assis (1839-1908) nasceu e morreu no Rio de Janeiro, então capital do país, de onde nunca saiu, exceto uma viagem de três meses ao interior do estado, realizada por recomendação médica em 1882.</p>
+            
+            <p class="pSobreAutor">
+                <img class="imgMachadoAssis2" src="../imagens/machadoAssis2.jpg">
+                O escritor começou sua vida de modo bastante humilde. Na adolescência, não realizou estudos regulares, mas teve a oportunidade de aprender um pouco de latim com um padre. Também teve aulas de português e álgebra, com uma professora conhecida da família, e aprendeu francês com um casal que o conheceu na barca que ligava a cidade do Rio de Janeiro a Niterói.
+                </br>
+                </br>
+                Após viver sua infância, marcado por uma série de trabalhos, de modo a auxiliar a sua família financeiramente, Machado conseguiu o seu primeiro ofício, como auxiliar de tipografia. No período, trabalhou sob a supervisão do jornalista e escritor Manuel Antônio de Almeida, autor de Memórias de um sargento de milícias (1855).
+            </p>
+
+            <p class="pSobreAutor">Nesse tempo, revelava uma especial predileção pela leitura. Dentre alguns dos autores prediletos do autor, estavam: o inglês William Shakespeare; os irlandeses Jonathan Swift (As viagens de Gulliver) e Laurence Sterne (Tristram Shandy); os pensadores alemães, especialmente Arthur Schopenhauer; bem como os escritores franceses em geral. </p>
+            
+            <p class="pSobreAutor">
+                <img class="imgRioDeJaneiro" src="../imagens/rioDeJaneiro.jpg">
+                Sua erudição facilitou o seu acesso e êxito na sociedade carioca. Tendo em vista o meio em que estava inserido e a sua habilidade em se relacionar com os demais correspondentes culturais da cidade, aos poucos construiu um respeitável círculo de amigos, desde o editor literário Paula Brito até os políticos mais influentes do período, como Quintino Bocaiuva e o próprio Imperador Dom Pedro II.
+                </br>
+                </br>
+                Machado tornou-se uma autêntica referência social e cultural no meio fluminense. A partir dos cinquenta anos, passou a receber diversos prêmios e homenagens, dentre elas o convite para presidir e ocupar a cadeira de número um da Academia Brasileira de Letras, inaugurada em dezembro de 1896.
+            </p>
+
+            <p class="pSobreAutor">(Memórias Póstumas de Brás Cubas - Texto Integral - Editora Martin Claret LTDA.)</p>
+            <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    var deslogar = document.getElementById("deslogar");
+    deslogar.addEventListener("click", function(){
+	localStorage.removeItem("id");
+	localStorage.removeItem("token")
+	localStorage.removeItem("nome")
+    localStorage.removeItem("email")
+})
+if(localStorage.getItem("id")!= null){
+    var logado = document.getElementById("logado")
+            logado.innerHTML = ''
+            logado.innerHTML += `<button class="buttonLogin" type="button" id="logado" style="background-color: limegreen;">Logado</button>`
+}
+</script>
+</body>
+</html>

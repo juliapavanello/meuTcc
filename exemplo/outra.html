@@ -1,0 +1,33 @@
+<html>
+    <p>Outra Pagina</p>
+<script>// Obtém a URL da imagem dos parâmetros da URL
+    // Suponha que você tenha uma URL de endpoint para buscar a imagem do banco de dados
+const endpointURL = 'http://localhost:3000/get_image?id=1'; // Substitua pela URL correta
+
+// Faça uma solicitação GET para obter a imagem
+fetch(endpointURL)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Erro ao buscar a imagem');
+    }
+    return response.blob();
+  })
+  .then(blob => {
+    // Crie um objeto URL a partir do blob da imagem
+    const imageUrl = URL.createObjectURL(blob);
+
+    // Crie uma tag <img> e defina seu atributo "src" com a URL da imagem
+    const imgElement = document.createElement('img');
+    imgElement.src = imageUrl;
+
+    // Adicione a imagem ao elemento desejado na sua página (substitua 'seuElemento' pelo seletor correto)
+    const seuElemento = document.getElementById('suaDiv'); // Substitua 'suaDiv' pelo ID ou seletor do elemento desejado
+    seuElemento.appendChild(imgElement);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+    </script>
+    
+</html>

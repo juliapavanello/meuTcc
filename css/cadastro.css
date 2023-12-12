@@ -1,0 +1,94 @@
+.divCadastrar {
+    box-sizing: border-box;
+    width: 100%;
+    height: 842px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FDF0D5;
+    border: 1px solid #FDF0D5;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+    box-shadow: 2px 2px 10px #AA4646;
+    align-items: center;
+}
+
+.formulario-box {
+    width: 500px;
+    background: #AA4646;
+    border-radius: 10px;
+    color: #010101;
+    font-family: 'PT Serif';
+    box-shadow: 2px 2px 10px #AA4646;
+    margin-top: 100px;
+
+}
+
+.formulario {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px 24px;
+    gap: 16px;
+    text-align: center;
+}
+
+.titleCadastrar {
+    font-weight: bold;
+    font-size: 50px;
+    color: white;
+}
+
+.formulario-container {
+    border-radius: 4px;
+    background-color: #fff;
+    margin: 1rem 0 .5rem;
+    width: 100%;
+}
+
+.inputCadastrar {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 1px solid #AA4646;
+    border-radius: 2px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    font-family: 'Inter';
+}
+
+.formulario-section {
+    padding: 16px;
+    font-size: .85rem;
+    background-color: #e0ecfb;
+    box-shadow: rgb(0 0 0 / 8%) 0 -1px;
+}
+
+.formulario-section a {
+    font-weight: bold;
+    color: #780000;
+    transition: color .3s ease;
+}
+
+.formulario-section a:hover {
+    color: #780000;
+    text-decoration: underline;
+}
+
+.formulario button {
+    background-color: #780000;
+    color: white;
+    border: 0;
+    border-radius: 4px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    box-shadow: 0 0.7em 1.5em -0.5em #780000;
+}
+
+.formulario button:hover {
+    background-color: #ccc;
+    color: #000000;
+}

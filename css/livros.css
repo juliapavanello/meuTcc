@@ -1,0 +1,158 @@
+.pesquisar {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 1px solid #AA4646;
+    box-sizing: border-box;
+    transition: 0.5s;
+    margin-left: 50px;
+}
+.input-group {
+    display: flex;
+    align-items: center;
+    margin: 3rem 0 3rem 0;
+}
+
+#nomePesquisa, #autorPesquisa {
+    min-height: 50px;
+    max-width: 150px;
+    padding: 0 1rem;
+    color: #d82222;
+    font-size: 15px;
+    border: 1px solid #780000;
+    border-radius: 6px 0 6px 0;
+    margin: -6px;
+    background-color: transparent;
+}
+#btnNomePesquisa, #btnAutorPesquisa{
+    min-height: 50px;
+    padding: .5em 1em;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    background-color: #780000;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color .3s ease-in-out;
+    margin-right: 20px;
+    margin-left: -6px;
+}
+
+h1{
+    text-align: center;
+}
+
+.link-color {
+    color: #780000; /* Ou a cor que desejar */
+    text-decoration: none;
+  }
+
+.link-color:hover{
+    color: #AA4646;
+}
+
+body {
+    background-color: #fdf0d5 !important;
+}
+
+#botaoAdicionar{
+    color: white;
+    background-color: #780000;
+}
+
+#container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0%;
+}
+
+.item {
+    width: 2rem;
+    margin-top: .1rem;
+    height: 2rem;
+    font-family: 'PT Se rif';
+}
+.sinopse{
+    font-family: 'PT Se rif';
+    
+}
+.tamanho{
+    width: 100%;
+ text-align: center;
+}
+#titulo{
+    margin-bottom: 20px;
+}
+
+.fontemaior{
+    font-size:30px;
+}
+
+.custom-font-size{
+    font-size: small;
+    
+}
+
+/* .accordion-button {
+    background-color: #780000 !important;
+    color: white !important;
+} */
+
+.hr{
+        margin: 1rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;   
+}
+
+/* .linha{
+    height: 100px;
+} */
+
+/* Estilize o botão "+" */
+.imagemEdit {
+    width: 10rem;
+    height: 10rem;
+    background-color: #780000; /* Cor de fundo do botão */
+    color: #fff; /* Cor do texto dentro do botão */
+    /* border-radius: 50%; Forma circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px; /* Tamanho do texto */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+    transition: background-color 0.3s ease; /* Animação de transição de cor */
+  }
+  
+  /* Estilize o botão "+" quando passar o mouse sobre ele */
+  .imagemEdit:hover {
+    background-color: #590101; /* Cor de fundo alterada */
+  }
+  
+
+  .livro-imagem{
+    max-height:13rem;
+  }
+
+  .auto-width {
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .centrar-itens {
+    text-align: center; /*Centraliza horizontalmente */
+    vertical-align: middle; /* Centraliza verticalmente */
+  }
+      
+/* .accordion-body{
+    width: 100px;
+} */
+    
+ 
+
+
+
+

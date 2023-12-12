@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <form id="formulario" enctype="multipart/form-data">
+        <input type="file" name="avatar" />
+        <br />
+        <button type="submit" name="upload">Upload</button>
+        <br />
+        <img id="avatar">
+    </form>
+
+    <script>
+        var form = document.getElementById("formulario");
+       //form.submit(false)
+        function submitForm(event) {
+            event.preventDefault();
+            let formData = new FormData();
+            formData.append('avatar', event.target[0].files[0]);
+            console.log(event.target[0].files[0]);
+            fetch('http://localhost:3001/avatar', { method: 'post', body: formData })
+                .then(res => res.json())
+                .then(res => {
+                    // avatar.src = `http://localhost:3001${res.payload.url}`;
+                    // console.log(res.payload)
+                    window.location.href = `outra.html?image_url=http://localhost:3001${res.payload.url}`;
+                })
+                .catch(console.log);
+        }
+        form.addEventListener('submit', submitForm);
+    </script>
+</body>
+

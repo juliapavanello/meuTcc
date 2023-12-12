@@ -1,0 +1,45 @@
+#container{
+    width: 100%;
+    font-size: x-large;
+}
+
+#formulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.campo{
+    background-color: white;
+    border: none;
+    border-bottom: .1rem solid gray;
+    width: 40%;
+    text-align: center;
+    margin-left: 0 !important;
+}
+
+.elementoFormulario{
+    margin-top: 1rem;
+    outline: none;
+    font-size: x-large;
+}
+
+#erro{
+    display: none;
+    color: red;
+}
+
+#botaoAdicionar{
+    color: white;
+    background-color: #780000;
+}
+
+.custom-font-size  {
+    font-size: 5px !important; /* Tamanho de fonte desejado */
+  }
+
+body {
+    background-color:  #fdf0d5 !important;
+}
+  
+

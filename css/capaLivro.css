@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    height: 40rem; /* Define a altura da div de contêiner como a altura da janela */
+}
+
+
+.machado {
+    max-width: 100%; /* Garante que a imagem não ultrapasse a largura do contêiner */
+    max-height: 100%; /* Garante que a imagem não ultrapasse a altura do contêiner */
+    margin-bottom: 2rem;
+}
+
+h2 {
+    text-align: center;
+}
+/* Estilizando todos os botões dentro do formulário */
+#formulario button {
+    background-color: #780000; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    padding: 10px 20px; /* Espaçamento interno */
+    border: none; /* Remova a borda padrão */
+    border-radius: 5px; /* Cantos arredondados */
+    cursor: pointer; /* Ícone de cursor de mão ao passar o mouse */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: background-color 0.3s ease; /* Efeito de transição suave */
+}
+
+/* Estilizando o botão de envio */
+#formulario button[type="submit"] {
+    background-color: #AA4646; /* Cor de fundo alterada para o botão de envio */
+    margin-top: 5rem;
+}
+
+/* Estilizando o botão de redefinição (opcional) */
+#formulario button[type="reset"] {
+    background-color: #CCCCCC; /* Cor de fundo alterada para o botão de redefinição */
+    color: #333333; /* Cor do texto alterada para o botão de redefinição */
+}
+
+/* Estilizando o botão de envio quando passar o mouse sobre ele */
+#formulario button:hover {
+    background-color: #590101; /* Cor de fundo alterada no hover */
+}
+form {
+    margin-top: 1rem;
+}
+body {
+    background-color: #fdf0d5 !important; /* Cor de fundo desejada */
+}
