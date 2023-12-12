@@ -53,8 +53,9 @@ function criarlinhaLivro(livro) {
     .then(response => response.text())
     .then(imageUrl => {
       const imagem = document.querySelector(`.livro-imagem[data-id="${livro.id}"]`);
+      console.log(">>>>>>>>>>>>>>");
+      console.log(imageUrl);
       if (imageUrl) {
-        console.log(imageUrl)
         imagem.src = "js/public" + imageUrl;
         console.log(imagem)
       } else {

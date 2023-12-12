@@ -15,7 +15,10 @@ const https = require('https')
 const fs = require(`fs`);
 const cors = require('cors');
 const banco = require("./banco")
+
 const Usuario = require("./Usuario")
+const livros = require("./livros")
+const imagens = require("./imagens")
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -42,12 +45,12 @@ async function encontrarUsuarioPorId(id){
 }
 
 const jsonParser = bodyParser.json();
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'juliacristina',
-  password: 'Abcd&123',
-  database: 'TCCCERTO',
-});
+// const db = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'juliacristina',
+//   password: 'Abcd&123',
+//   database: 'TCCCERTO',
+// });
 app.listen(3000)
 app.use(express.json())
 const portaServidor = 3001
@@ -227,6 +230,46 @@ app2.put("/auth/user/:id", checkToken, jsonParser, async (req, res) => {
 });
 
 //AREA IMAGEM
+// app.post('/avatar', async (req, res) => {
+//   parser.single('avatar')(req, res, async (err) => {
+//     if (err) {
+//       res.status(500).json({ error: 1, payload: err });
+//     } else {
+//       const image = {};
+//       image.url = `/uploads/${req.file.filename}`;
+//       const idLivro = req.body.idLivro; // Assumindo que você está passando o idLivro no formulário
+
+//       // Verifique se já existe uma imagem associada ao livro
+//       const existingImageQuery = 'SELECT * FROM imagens WHERE idLivro = ?';
+//       const [existingImageRows] = await db.promise().query(existingImageQuery, [idLivro]);
+
+//       if (existingImageRows.length > 0) {
+//         // Já existe uma imagem, então atualize-a
+//         const updateImageQuery = 'UPDATE imagens SET url = ? WHERE idLivro = ?';
+//         try {
+//           await db.promise().query(updateImageQuery, [image.url, idLivro]);
+//           res.status(200).json({ error: 0, payload: { id: existingImageRows[0].id, url: image.url } });
+//         } catch (error) {
+//           console.error('Erro ao atualizar a imagem no banco de dados:', error);
+//           res.status(500).json({ error: 1, payload: 'Erro ao atualizar a imagem no banco de dados' });
+//         }
+//       } else {
+//         // Nenhuma imagem existe, então insira a nova imagem
+//         try {
+//           const result = await db.promise().query('INSERT INTO imagens (url, idLivro) VALUES (?, ?)', [
+//             image.url,
+//             idLivro,
+//           ]);
+//           const insertedId = result[0].insertId; // Obtenha o ID gerado automaticamente
+//           res.status(200).json({ error: 0, payload: { id: insertedId, url: image.url } });
+//         } catch (error) {
+//           console.error('Erro ao salvar a imagem no banco de dados:', error);
+//           res.status(500).json({ error: 1, payload: 'Erro ao salvar a imagem no banco de dados' });
+//         }
+//       }
+//     }
+//   });
+// });
 app.post('/avatar', async (req, res) => {
   parser.single('avatar')(req, res, async (err) => {
     if (err) {
@@ -234,142 +277,127 @@ app.post('/avatar', async (req, res) => {
     } else {
       const image = {};
       image.url = `/uploads/${req.file.filename}`;
-      const idLivro = req.body.idLivro; // Assumindo que você está passando o idLivro no formulário
+      const idLivro = req.body.livroId;
 
-      // Verifique se já existe uma imagem associada ao livro
-      const existingImageQuery = 'SELECT * FROM imagens WHERE idLivro = ?';
-      const [existingImageRows] = await db.promise().query(existingImageQuery, [idLivro]);
+      try {
+        // Find the livro (book) by idLivro
+        const livro = await livros.findByPk(idLivro, { include: imagens });
 
-      if (existingImageRows.length > 0) {
-        // Já existe uma imagem, então atualize-a
-        const updateImageQuery = 'UPDATE imagens SET url = ? WHERE idLivro = ?';
-        try {
-          await db.promise().query(updateImageQuery, [image.url, idLivro]);
-          res.status(200).json({ error: 0, payload: { id: existingImageRows[0].id, url: image.url } });
-        } catch (error) {
-          console.error('Erro ao atualizar a imagem no banco de dados:', error);
-          res.status(500).json({ error: 1, payload: 'Erro ao atualizar a imagem no banco de dados' });
+        if (livro && livro.imagens && livro.imagens.length > 0) {
+          // An image already exists, update it
+          const existingImage = livro.imagens[0];
+          await existingImage.update({ url: image.url });
+          res.status(200).json({ error: 0, payload: { id: existingImage.id, url: image.url } });
+        } else {
+          // No image exists, create a new one
+          const newImage = await imagens.create({ url: image.url, livroId: idLivro });
+          res.status(200).json({ error: 0, payload: { id: newImage.id, url: image.url } });
         }
-      } else {
-        // Nenhuma imagem existe, então insira a nova imagem
-        try {
-          const result = await db.promise().query('INSERT INTO imagens (url, idLivro) VALUES (?, ?)', [
-            image.url,
-            idLivro,
-          ]);
-          const insertedId = result[0].insertId; // Obtenha o ID gerado automaticamente
-          res.status(200).json({ error: 0, payload: { id: insertedId, url: image.url } });
-        } catch (error) {
-          console.error('Erro ao salvar a imagem no banco de dados:', error);
-          res.status(500).json({ error: 1, payload: 'Erro ao salvar a imagem no banco de dados' });
-        }
+      } catch (error) {
+        console.error('Erro ao salvar/atualizar a imagem no banco de dados:', error);
+        res.status(500).json({ error: 1, payload: 'Erro ao salvar/atualizar a imagem no banco de dados' });
       }
     }
   });
 });
-app.get("/imagens/:idLivro", function (req, res) {
-  const idLivro = req.params.idLivro;
-  const sql = "SELECT url FROM imagens WHERE idLivro = ?";
-  
-  db.query(sql, [idLivro], function (err, result, fields) {
-    if (err) throw err;
-    if (result.length > 0) {
-      const imageUrl = result[0].url;
-      res.send(imageUrl);
-    } else {
-      // Caso não haja imagem associada, envie uma resposta vazia ou uma URL padrão
-      res.send("");
-    }
-  });
-});
 
+app.get("/imagens/:livroId", async function(req, res) {
+  try {
+    const resultado = await imagens.imagens.findAll({
+      where: {livroId:req.params.livroId}
+    });
+
+    if (resultado === null) {
+      res.status(404).send({});
+    } else {
+      const imageUrl = resultado.url
+      res.json(imageUrl);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Erro interno do servidor" });
+  }
+});
 
 //FIM AREA IMAGEM
-app.get("/livros/", function (req,res){
-  var sql = "SELECT * FROM livros"
-  db.query(sql, function (err, result, fields) {
-    if (err) throw err;
-    res.send( result )
+app.get("/livros/",async function(req, res) {
+  const resultado = await livros.livros.findAll()
+  res.json(resultado);
+})
+
+app.get("/livros/:id",async function(req, res) {
+  const resultado = await livros.livros.findByPk(req.params.id)
+  if( resultado == null ){
+      res.status(404).send({})
+  }
+  res.json(resultado);
+})
+
+app.get("/livros/nome/:nome",async function(req, res) {
+  const resultado = await livros.livros.findAll({
+      where:{ nome:req.params.nome }
   })
+  if( resultado == null ){
+      res.status(404).send({})
+  }
+  res.json(resultado);
 })
 
-app.get("/livros/:id", function(req,res){
-  var sql = "SELECT * FROM livros WHERE id = ?"
-  var values = [req.params.id]
-  db.query(sql, values, function (err, result) {
-    if (err) throw err;
-    if( result.length == 0 ){
-      res.status( 404 ).send({})
-    }else{
-      res.send( result )
-    }
-  });
+app.post("/livros/",async function(req,res){
+  const resultado = await livros.livros.create({
+    nome: req.body.nome,
+    link:req.body.link,
+    sinopse:req.body.sinopse
+  })
+  res.json(resultado)
 })
 
-app.get("/livros/nome/:nome", function(req,res){
-  var sql = "SELECT * FROM livros WHERE nome = ?"
-  var values = [req.params.nome]
-  db.query(sql, values, function (err, result) {
-    if (err) throw err;
-    if( result.length == 0 ){
-      res.status( 404 ).send({})
-    }else{
-      res.send( result )
-    }
-  });
+app.put("/livros/:id",async function(req,res){
+  const resultado = await livros.livros.update({
+    nome: req.body.nome,
+    link:req.body.link,
+    sinopse:req.body.sinopse
+  },{
+      where:{id: req.params.id}
+  })
+  if( resultado == 0){
+      res.status(404).send({})
+  }else{
+      res.json( await livros.livros.findByPk(req.params.id))
+  }
 })
-app.post("/livros/", jsonParser, function( req, res ){
-  var sql = "INSERT INTO livros (nome, link, sinopse) VALUES (?,?,?)";
-  var values = [req.body.nome, req.body.link, req.body.sinopse]
-  db.query(sql, values, function (err, result) {
-    if (err) throw err;
-    const novoLivro = {
-      id: result.insertId,
-      nome: req.body.nome,
-      link:req.body.link,
-      sinopse:req.body.sinopse
-    };
-    res.send( novoLivro );
-  });
-});
 
-app.put("/livros/:id",jsonParser, function(req,res){
-  var sql = "UPDATE livros SET nome = ?, link = ?, sinopse = ? WHERE id = ?";
-  var values = [req.body.nome, req.body.link, req.body.sinopse, req.params.id]
-  db.query(sql, values, function (err, result) {
-    if (err) throw err;
-    if( result.affectedRows == 0 ){
-      res.status( 404 ).send( {} )
-    }else{
-      const novoLivro = {
-        id: req.params.id,
-        nome: req.body.nome,
-        link:req.body.link,
-        sinopse:req.body.sinopse
-      };
-      res.send( novoLivro );
-    }
-  });
-});
-
-app.delete('/livros/:id', (req, res) => {
+app.delete('/livros/:id', async (req, res) => {
   const livroId = req.params.id;
 
-  // Primeiro, exclua as imagens associadas a este livro
-  db.query('DELETE FROM imagens WHERE idLivro = ?', [livroId], (err, result) => {
-    if (err) {
-      console.error('Erro ao excluir imagens:', err);
-      return res.status(500).json({ error: 'Erro ao excluir imagens' });
-    }
+  try {
+    // Inicie uma transação Sequelize
+    await sequelize.transaction(async (t) => {
+      // Exclua as imagens associadas a este livro
+      await imagens.destroy({
+        where: {
+          livroId: livroId
+        },
+        transaction: t
+      });
 
-    // Em seguida, exclua o livro
-    db.query('DELETE FROM livros WHERE id = ?', [livroId], (err, result) => {
-      if (err) {
-        console.error('Erro ao excluir livro:', err);
-        return res.status(500).json({ error: 'Erro ao excluir livro' });
+      // Em seguida, exclua o livro
+      const livroExcluido = await livros.destroy({
+        where: {
+          id: livroId
+        },
+        transaction: t
+      });
+
+      if (livroExcluido === 0) {
+        // Se nenhum livro foi excluído, significa que o livro não foi encontrado
+        return res.status(404).json({ error: 'Livro não encontrado' });
       }
 
       res.json({ message: 'Livro e imagens associadas excluídas com sucesso' });
     });
-  });
+  } catch (error) {
+    console.error('Erro ao excluir livro e imagens:', error);
+    res.status(500).json({ error: 'Erro ao excluir livro e imagens' });
+  }
 });

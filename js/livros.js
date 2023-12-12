@@ -1,9 +1,9 @@
 const sequelize = require("sequelize");
 const banco = require("./banco")
-const imagens = require("./imagens");
-const livros = require("./livros")
-var Usuario = banco.conexao.define(
-    "usuario",
+const imagens = require("./imagens")
+
+var livros = banco.conexao.define(
+    "livros",
     {
         id:{
             type:sequelize.INTEGER.UNSIGNED,
@@ -14,16 +14,15 @@ var Usuario = banco.conexao.define(
             type:sequelize.STRING,
             allowNull:false
         },
-        email:{
+        link:{
             type:sequelize.STRING,
             allowNull:false
         },
-        hash:{
+        sinopse:{
             type:sequelize.STRING,
             allowNull:false
         }
     }
 )
-Usuario.hasMany(imagens.imagens)
-Usuario.hasMany(livros.livros)
-module.exports = {Usuario: Usuario}
+livros.hasMany(imagens.imagens)
+module.exports = {livros: livros}
