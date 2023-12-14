@@ -13,6 +13,9 @@ var imagens = banco.conexao.define(
             type:sequelize.STRING,
             allowNull:false
         }
+    },
+    {
+        timestamps:false
     }
 )
 

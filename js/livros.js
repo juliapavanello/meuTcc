@@ -22,6 +22,9 @@ var livros = banco.conexao.define(
             type:sequelize.STRING,
             allowNull:false
         }
+    },
+    {
+        timestamps:false
     }
 )
 livros.hasMany(imagens.imagens)
